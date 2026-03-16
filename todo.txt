@@ -1,0 +1,11 @@
+TODO: 
+- Export to different engines
+- Support for big meshes (vertex mode)
+- Implement tangent export
+- Implement range based LDR export to optimize memory when needed 
+- Implement hard edges splitting
+
+BUGS:
+- Looping doesn't always work for some reason?
+- Some bug when exporting with triangulate modifier?
+- Needs animation caching sometimes

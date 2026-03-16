@@ -1,0 +1,6 @@
+1.0
+- created the project
+- main features
+
+1.1
+- initial git push
