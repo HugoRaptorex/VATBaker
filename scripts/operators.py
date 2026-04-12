@@ -49,13 +49,23 @@ class VATBAKER_OT_export_selected(bpy.types.Operator):
             bpy.ops.export_scene.fbx("INVOKE_DEFAULT", use_selection=True, filepath=path, bake_anim=False)
             return {"FINISHED"}
         elif props.bake_mode == 'OPT_TRANS':
-            # Copy seelcted objects
+            
+            # Copy objects
             selected_objs = bpy.context.selected_objects
             copied_objs = []
+
             for obj in selected_objs:
                 obj_copy = obj.copy()
                 obj_copy.data = obj.data.copy()
+                matrix = obj_copy.matrix_world.copy()
                 bpy.context.collection.objects.link(obj_copy)
+
+                if obj_copy.rigid_body is not None:
+                    bpy.context.view_layer.objects.active = obj_copy
+                    bpy.ops.rigidbody.object_remove()
+
+                obj_copy.matrix_world = matrix
+
                 copied_objs.append(obj_copy)
 
             # Select correct objects
@@ -69,8 +79,8 @@ class VATBAKER_OT_export_selected(bpy.types.Operator):
             bpy.ops.object.join()
             bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
             bpy.ops.export_scene.fbx("INVOKE_DEFAULT", use_selection=True, filepath=path, bake_anim=False)
-            
             return {"FINISHED"}
+
 
 
 class VATBAKER_OT_open_selected_directory(bpy.types.Operator):
@@ -110,7 +120,7 @@ class VATBAKER_OT_open_selected_directory(bpy.types.Operator):
 class VATBAKER_OT_bake_textures(bpy.types.Operator):
     bl_idname      = "vatbaker.bake_textures"
     bl_label       = "Bake VAT Textures"
-    bl_description = "Bake VAT textures, save them to disk and create proper UV set for the selected meshes. Processing might take a while when baking a lot of frames."
+    bl_description = "Bake selected meshes animation to textures and create VAT UV sets. Processing might take a while when baking a lot of frames."
     bl_options     = { "REGISTER" }
 
     @classmethod

@@ -50,7 +50,19 @@ class VATBAKER_PT_main_panel(VATBAKER_common_panel_labels, bpy.types.Panel):
         col.prop(props, "frame_base", text="Base Frame")
         
         col = layout.column(align=True)
-        col.prop(props, "uv_channel", text="UV Channel Index")
+        col.prop(props, "max_range")
+
+        col = layout.column(align=True)
+        if props.bake_mode == 'OPT_VERTS': 
+            col.prop(props, "uv_channel_vert_id", text="UV ID Index")
+        elif props.bake_mode == 'OPT_TRANS':
+            
+            col.prop(props, "uv_channel_trans_id", text="UV ID Index")
+            col.prop(props, "uv_channel_trans_pivot", text="UV Pivot Index")
+            if props.uv_channel_trans_id == props.uv_channel_trans_pivot:
+                col.alert = True
+                col.label(text="UV channels must have different values!", icon='ERROR')
+                col.alert = False
         
         layout.separator()
         
@@ -68,17 +80,11 @@ class VATBAKER_PT_main_panel(VATBAKER_common_panel_labels, bpy.types.Panel):
         layout.separator()
     
         col = layout.column(align=True)
-        col.label(text="Position")
         col.prop(props, "include_position")
-        col.prop(props, "position_is_hdr")
         col.prop(props, "positon_suffix")
 
-        layout.separator()
-
         col = layout.column(align=True)
-        col.label(text="Rotation")
         col.prop(props, "include_rotation")
-        col.prop(props, "rotation_is_hdr")
         col.prop(props, "rotation_suffix")
 
         layout.separator()

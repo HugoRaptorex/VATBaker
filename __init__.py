@@ -25,7 +25,7 @@ from .scripts.panels import *
 bl_info = {
     "name": "VAT Baker",
     "author": "Piotr Charchut",
-    "version": (1, 1),
+    "version": (1, 2),
     "blender": (4, 5, 3),
     "location": "View3D > Sidebar panel > VAT Baker",
     "description": "Simple Vertex Animation Textures baking utility.",

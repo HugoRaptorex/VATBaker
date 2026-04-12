@@ -4,3 +4,8 @@
 
 1.1
 - initial git push
+
+1.2
+- bugfixes
+- both uv channels for transform mode can be customized now
+- added LDR baking
